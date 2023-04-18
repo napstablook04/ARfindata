@@ -51,9 +51,9 @@
 |   :---: |   :---: |
 |pandas     |sz, sh, ARdata|
 |selenium   |   sz, sh           |
-|time      |sz, .sh |
+|time      |sz, sh |
 |os       |       sz, sh, ARdata         |
-|re|sz, sh, .ARdata |
+|re|sz, sh, ARdata |
 |fitz|ARdata|
 |pdfplumber|ARdata|
 |requests|ARdata|
