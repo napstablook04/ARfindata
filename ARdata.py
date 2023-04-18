@@ -73,13 +73,35 @@ class annualreport_data():
         p_rev = re.compile('(?<=\n)营业总?收入（?(\w*?)?）?\s?\n?\s*([\d+,.]*)\s\n?')
         p_eps = re.compile('(?<=\n)基本每股收益（元/?／?\n?股）\s?\n?([-\d+,.]*)\s?\n?')
         
+        revenue=[]
+        eps=[]
+        
         year = [int(p_year.findall(text)[0]) for text in txt]
         dw = [p_rev.search(text).group(1) for text in txt ]
-        revenue=[float(p_rev.search(text).group(2).replace(',',''))*10000
-                 if w=="万元" or w=="万" 
-                 else float(p_rev.search(text).group(2).replace(',',''))
-                 for text,w in zip(txt,dw)]
-        eps=[p_eps.search(text).group(1) for text in txt]
+         for text,w in zip(txt,dw):
+            try:
+                if w=="万元" or w=="万":
+                    r=float(p_rev.search(text).group(2).replace(',',''))*10000
+                else:
+                    r=float(p_rev.search(text).group(2).replace(',',''))
+            except:
+                r='none'
+            revenue.append(r)
+                
+
+        for text in txt:
+            try:
+                e=p_eps.search(text).group(1)
+            except:
+                e='none'
+            eps.append(e)
+            
+        #revenue=[float(p_rev.search(text).group(2).replace(',',''))*10000
+        #         if w=="万元" or w=="万" 
+        #         else float(p_rev.search(text).group(2).replace(',',''))
+        #         for text,w in zip(txt,dw)]
+        #eps=[p_eps.search(text).group(1) for text in txt]
+        
         return [year,revenue,eps]
     
     def pdf_to_data(self):
